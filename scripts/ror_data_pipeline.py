@@ -8,6 +8,12 @@ url = "https://api.ror.org/v2/organizations"
 response = requests.get(url).json()
 items = response.get('items', [])
 
+<<<<<<< HEAD
+=======
+print(f"Fetched {len(items)} organizations from ROR API."   )
+exit()
+
+>>>>>>> 5ad5ac10716404b7ec0307a1a7c3079819b52649
 # json_normalize is what creates the 'admin.created.date' columns
 df = pd.json_normalize(items)
 
