@@ -23,7 +23,10 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_WHED = PROJECT_ROOT / "scripts" / "whed_scraper.py"
 DEFAULT_OFFICERS = PROJECT_ROOT / "scripts" / "fetch_officer_socials.py"
-DEFAULT_INSTITUTIONS_CSV = PROJECT_ROOT / "data-raw" / "institutions.csv"
+DEFAULT_INSTITUTIONS_CSV_CANDIDATES = (
+    PROJECT_ROOT / "whed_output" / "institutions.csv",
+    PROJECT_ROOT / "data-raw" / "institutions.csv",
+)
 
 
 def resolve_path(path_str: str | Path) -> Path:
@@ -42,6 +45,23 @@ def parse_extra_args(text: str) -> list[str]:
     if not text.strip():
         return []
     return shlex.split(text.strip())
+
+
+def pick_institutions_csv(path_arg: str) -> Path:
+    """
+    Resolve institutions CSV from explicit path or known defaults.
+    Priority:
+      1) user-provided --institutions-csv
+      2) whed_output/institutions.csv
+      3) data-raw/institutions.csv
+    """
+    if path_arg.strip():
+        return resolve_path(path_arg)
+    for candidate in DEFAULT_INSTITUTIONS_CSV_CANDIDATES:
+        if candidate.is_file():
+            return candidate
+    # Keep deterministic error messaging when none exist yet.
+    return DEFAULT_INSTITUTIONS_CSV_CANDIDATES[0]
 
 
 def main() -> int:
@@ -68,10 +88,10 @@ def main() -> int:
     )
     parser.add_argument(
         "--institutions-csv",
-        default=str(DEFAULT_INSTITUTIONS_CSV),
+        default="",
         help=(
-            "CSV expected from WHED step and passed to officers step as --input "
-            f"(default: {DEFAULT_INSTITUTIONS_CSV})"
+            "CSV expected from WHED step and passed to officers step as --input. "
+            "If omitted, auto-detects whed_output/institutions.csv, then data-raw/institutions.csv."
         ),
     )
     parser.add_argument(
@@ -101,7 +121,7 @@ def main() -> int:
             PROJECT_ROOT / "scripts" / "institution_officers_social.py",
         ]
         officers_script = next((p for p in candidates if p.is_file()), candidates[0])
-    institutions_csv = resolve_path(args.institutions_csv)
+    institutions_csv = pick_institutions_csv(args.institutions_csv)
     whed_extra = parse_extra_args(args.whed_args)
     officers_extra = parse_extra_args(args.officers_args)
 
