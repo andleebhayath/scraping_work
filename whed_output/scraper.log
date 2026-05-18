@@ -50,3 +50,14 @@
 2026-05-06 14:51:33  INFO        Parsed 10 institutions from this page
 2026-05-06 14:51:38  INFO        Fetching list page offset=40 …
 2026-05-06 14:51:38  INFO        Parsed 10 institutions from this page
+2026-05-06 17:32:52  INFO      ╔════════════════════════════════════════════════════╗
+2026-05-06 17:32:52  INFO      ║       WHED Scraper  — Starting                     ║
+2026-05-06 17:32:52  INFO      ║  Country : Pakistan                                ║
+2026-05-06 17:32:52  INFO      ║  Output  : whed_output                             ║
+2026-05-06 17:32:52  INFO      ╚════════════════════════════════════════════════════╝
+2026-05-06 17:32:52  INFO      ============================================================
+2026-05-06 17:32:52  INFO      Phase 1: Scraping institution list for country='Pakistan'
+2026-05-06 17:32:52  INFO      ============================================================
+2026-05-06 17:32:52  INFO        Fetching list page offset=0 …
+2026-05-06 17:32:54  INFO        Total institutions found: 175
+2026-05-06 17:32:54  INFO        Parsed 10 institutions from this page
