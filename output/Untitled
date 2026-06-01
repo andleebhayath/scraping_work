@@ -1,1 +1,1 @@
-python scripts/pakistan_faculty_data.py --university "Riphah" --max-institutions 1 --max-departments 20 --page-max 20 --max-per-page 100 --via-jina
+Rename-Item output\pakistan_tech_companies_contacts.csv output\pakistan_tech_companies_contacts_backup.csv -ErrorAction SilentlyContinue
